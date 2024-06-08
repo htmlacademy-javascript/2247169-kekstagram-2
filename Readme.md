@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Olga Kosukhina](https://up.htmlacademy.ru/javascript-individual/2/user/2247169).
-* Наставник: `Неизвестно`.
+* Наставник: `Мария Филиппова`.
 
 ---
 
