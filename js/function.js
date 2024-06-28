@@ -1,12 +1,6 @@
 // Task 1
 
-function checkStringLength(string, number) {
-  if (string.length <= number) {
-    return true;
-  } else {
-    return false;
-  }
-}
+const checkStringLength = (string, length) => string.length <= length;
 
 checkStringLength('Hello', 5);
 checkStringLength('HelloKeks', 10);
@@ -14,7 +8,7 @@ checkStringLength('Hello', 7);
 
 // Task 2
 
-function isPalindrome(string) {
+const isPalindrome = (string) => {
   const normalizeString = string.replaceAll(' ', '').toLowerCase();
   let newString = '';
 
@@ -22,12 +16,9 @@ function isPalindrome(string) {
     newString += normalizeString.at(i);
   }
 
-  if (newString === normalizeString) {
-    return true;
-  } else {
-    return false;
-  }
-}
+  return newString === normalizeString;
+
+};
 
 isPalindrome('Топот');
 isPalindrome('ДовОд');
@@ -36,22 +27,22 @@ isPalindrome('Лёша на полке клопа нашёл');
 
 // Task 3
 
-function returnNumber(string) {
+const returnNumber = (input) => {
   let newString = '';
 
-  if (!isNaN(string)) {
-    string = string.toString();
+  if (!isNaN(input)) {
+    input = input.toString();
   }
 
-  for (let i = 0; i <= string.length - 1; i++) {
-    const symbol = parseInt(string[i], 10);
+  for (let i = 0; i <= input.length - 1; i++) {
+    const symbol = parseInt(input[i], 10);
 
     if (!isNaN(symbol)) {
       newString += symbol;
     }
   }
   return parseInt(newString, 10);
-}
+};
 
-returnNumber('2023 год');
+returnNumber('2023');
 
