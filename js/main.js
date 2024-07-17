@@ -42,7 +42,7 @@ const createRandomId = (min, max) => {
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
@@ -67,12 +67,11 @@ const createPhotos = () => {
     const photo = {};
     photo.id = photoId();
     photo.url = `photos/${urlId()}.jpg`;
-    photo.description = getRandomArrayElement(DESCRIPTIONS);;
+    photo.description = getRandomArrayElement(DESCRIPTIONS);
     photo.likes = getRandomInteger(MIN_LIKES, MAX_LIKES);
     photo.comments = Array.from({length: getRandomInteger(MIN_COMMENTS, MAX_COMMENTS)}, createComment());
     return photo;
   };
 };
 
-const photos = Array.from({length: PHOTO_ARRAY_LENGTH}, createPhotos());
-console.log(photos);
+Array.from({length: PHOTO_ARRAY_LENGTH}, createPhotos());
