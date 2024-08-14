@@ -46,3 +46,17 @@ const returnNumber = (input) => {
 
 returnNumber('2023');
 
+const meetingDuration = (startWorkDay, endWorkDay, startMeeting, durationMeeting) => {
+  const startWork = startWorkDay.split(':').map(Number);
+  const startWorkMinutes = startWork[0] * 60 + startWork[1];
+  const endWork = endWorkDay.split(':').map(Number);
+  const endWorkMinutes = endWork[0] * 60 + endWork[1];
+  const startMeet = startMeeting.split(':').map(Number);
+  const startMeetMinutes = startMeet[0] * 60 + startMeet[1];
+
+  const durationMeetingMinutes = startMeetMinutes + durationMeeting;
+
+  return startMeetMinutes >= startWorkMinutes && durationMeetingMinutes <= endWorkMinutes;
+};
+
+meetingDuration('8:30', '17:30', '9:00', 90);
