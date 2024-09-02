@@ -1,12 +1,9 @@
-import { getPhotos } from './get-photos.js';
-
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const photos = getPhotos();
 const container = document.querySelector('.pictures');
+const fragment = document.createDocumentFragment();
 
 const createThumbnail = (photo) => {
   const thumbnail = pictureTemplate.cloneNode(true);
-  thumbnail.href = photo.url;
   thumbnail.dataset.id = photo.id;
 
   const image = thumbnail.querySelector('.picture__img');
@@ -19,11 +16,12 @@ const createThumbnail = (photo) => {
   return thumbnail;
 };
 
-const fragment = document.createDocumentFragment();
+export const renderThumbnails = (photos) => {
+  photos.forEach((photo) => {
+    const thumbnail = createThumbnail(photo);
+    fragment.appendChild(thumbnail);
+  });
 
-photos.forEach((photo) => {
-  const thumbnail = createThumbnail(photo);
-  fragment.appendChild(thumbnail);
-});
+  container.appendChild(fragment);
+};
 
-container.appendChild(fragment);
