@@ -1,3 +1,5 @@
 import { getPhotos } from './get-photos.js';
+import { renderThumbnails } from './thumbnail.js';
 
-getPhotos();
+const photosArray = getPhotos();
+renderThumbnails(photosArray);
