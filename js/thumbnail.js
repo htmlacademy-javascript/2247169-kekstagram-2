@@ -1,14 +1,12 @@
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const container = document.querySelector('.pictures');
-const pictures = document.querySelector('.pictures');
+const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
 
 const createThumbnail = (photo) => {
-  const thumbnail = pictureTemplate.cloneNode(true);
+  const thumbnail = pictureTemplateElement.cloneNode(true);
   thumbnail.dataset.id = photo.id;
 
-  const image = thumbnail.querySelector('.picture__img');
-  image.src = photo.url;
-  image.alt = photo.description;
+  const imageElement = thumbnail.querySelector('.picture__img');
+  imageElement.src = photo.url;
+  imageElement.alt = photo.description;
 
   thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
@@ -16,7 +14,7 @@ const createThumbnail = (photo) => {
   return thumbnail;
 };
 
-export const renderThumbnails = (photos) => {
+export const renderThumbnails = (photos, container) => {
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
@@ -26,5 +24,3 @@ export const renderThumbnails = (photos) => {
 
   container.appendChild(fragment);
 };
-
-export { pictures };

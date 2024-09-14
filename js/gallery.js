@@ -1,17 +1,20 @@
-import { getPhotos } from './get-photos.js';
-import { renderThumbnails, pictures } from './thumbnail.js';
+import { renderThumbnails } from './thumbnail.js';
 import { renderBigPicture } from './big-picture.js';
-const photos = getPhotos();
 
-/* Отрисовка миниатюр */
-renderThumbnails(photos);
+const picturesContainerElement = document.querySelector('.pictures');
 
-/* Открытие больших фотографий по клике на миниатюры */
-pictures.addEventListener('click', (evt) => {
-  const currentPicture = evt.target.closest('.picture');
+const initializeGallery = (photos) => {
+  renderThumbnails(photos, picturesContainerElement);
 
-  if (currentPicture) {
-    evt.preventDefault();
-    renderBigPicture(currentPicture.dataset.id, photos);
-  }
-});
+  picturesContainerElement.addEventListener('click', (evt) => {
+    const currentPicture = evt.target.closest('.picture');
+
+    if (currentPicture) {
+      evt.preventDefault();
+      const currentPhoto = photos.find((photo) => photo.id === Number(currentPicture.dataset.id));
+      renderBigPicture(currentPhoto);
+    }
+  });
+};
+
+export { initializeGallery };
