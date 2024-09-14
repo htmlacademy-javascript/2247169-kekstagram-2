@@ -1,5 +1,5 @@
 import { getPhotos } from './get-photos.js';
-import { renderThumbnails } from './thumbnail.js';
+import { initializeGallery } from './gallery.js';
 
-const photosArray = getPhotos();
-renderThumbnails(photosArray);
+const photos = getPhotos();
+initializeGallery(photos);
