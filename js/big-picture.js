@@ -1,5 +1,5 @@
 import { isEscapeKey } from './utils.js';
-import { renderComments, clearComments } from './comments.js';
+import { renderComments, resetComments } from './comments.js';
 
 const bigPictureElement = document.querySelector('.big-picture');
 const bigImageElement = bigPictureElement.querySelector('.big-picture__img img');
@@ -8,11 +8,11 @@ const socialCaptionElement = bigPictureElement.querySelector('.social__caption')
 const cancelButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 
 const closeBigPicture = () => {
-  clearComments();
+  resetComments();
 
   bigPictureElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  cancelButtonElement.removeEventListener('click', closeBigPicture);
+  cancelButtonElement.removeEventListener('click', onCancelButtonClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
