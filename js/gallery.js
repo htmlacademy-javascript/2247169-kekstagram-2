@@ -7,11 +7,11 @@ const initializeGallery = (photos) => {
   renderThumbnails(photos, picturesContainerElement);
 
   picturesContainerElement.addEventListener('click', (evt) => {
-    const currentPicture = evt.target.closest('.picture');
+    const pictureElement = evt.target.closest('.picture');
 
-    if (currentPicture) {
+    if (pictureElement) {
       evt.preventDefault();
-      const currentPhoto = photos.find((photo) => photo.id === Number(currentPicture.dataset.id));
+      const currentPhoto = photos.find((photo) => photo.id === Number(pictureElement.dataset.id));
       renderBigPicture(currentPhoto);
     }
   });

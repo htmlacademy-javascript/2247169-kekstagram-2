@@ -1,26 +1,26 @@
-const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const createThumbnail = (photo) => {
-  const thumbnail = pictureTemplateElement.cloneNode(true);
-  thumbnail.dataset.id = photo.id;
+  const thumbnailElement = pictureTemplate.cloneNode(true);
+  thumbnailElement.dataset.id = photo.id;
 
-  const imageElement = thumbnail.querySelector('.picture__img');
+  const imageElement = thumbnailElement.querySelector('.picture__img');
   imageElement.src = photo.url;
   imageElement.alt = photo.description;
 
-  thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
-  thumbnail.querySelector('.picture__likes').textContent = photo.likes;
+  thumbnailElement.querySelector('.picture__comments').textContent = photo.comments.length;
+  thumbnailElement.querySelector('.picture__likes').textContent = photo.likes;
 
-  return thumbnail;
+  return thumbnailElement;
 };
 
-export const renderThumbnails = (photos, container) => {
+export const renderThumbnails = (photos, containerElement) => {
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
-    const thumbnail = createThumbnail(photo);
-    fragment.appendChild(thumbnail);
+    const thumbnailElement = createThumbnail(photo);
+    fragment.appendChild(thumbnailElement);
   });
 
-  container.appendChild(fragment);
+  containerElement.appendChild(fragment);
 };
