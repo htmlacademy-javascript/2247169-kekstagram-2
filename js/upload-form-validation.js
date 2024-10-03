@@ -2,7 +2,7 @@ const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_COUNT = 5;
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_DESC_LENGTH = 140;
-const errorMessages = {
+const ErrorMessages = {
   INVALID_HASHTAG_PREFIX: 'Хэштег не может состоять только из #',
   INVALID_HASHTAG_COUNT: `Максимальное количество хэштегов ${MAX_HASHTAG_COUNT}`,
   INVALID_HASHTAG_LENGTH: `Максимальная длина хэштега должна быть ${MAX_HASHTAG_LENGTH} символов, включая решётку`,
@@ -53,14 +53,17 @@ const validateHashtagPattern = (value) => getHashtagsFromInput(value).every((has
 
 const validateDescriptionLength = (value) => value.length <= MAX_DESC_LENGTH;
 
-pristine.addValidator(hashtagInputElement, validateHashtagsCount, errorMessages.INVALID_HASHTAG_COUNT, 1, true);
-pristine.addValidator(hashtagInputElement, validateHashtagLength, errorMessages.INVALID_HASHTAG_LENGTH, 4, true);
-pristine.addValidator(hashtagInputElement, validateHashtagSpace, errorMessages.INVALID_HASHTAG_SPACE, 5, true);
-pristine.addValidator(hashtagInputElement, validateHashtagUnique, errorMessages.INVALID_HASHTAG_UNIQUE, 2, true);
-pristine.addValidator(hashtagInputElement, validateHashtagStart, errorMessages.INVALID_HASHTAG_START_WITH, 7, true);
-pristine.addValidator(hashtagInputElement, validateHashtagPrefix, errorMessages.INVALID_HASHTAG_PREFIX, 6, true);
-pristine.addValidator(hashtagInputElement, validateHashtagPattern, errorMessages.INVALID_HASHTAG_PATTERN, 3, true);
+pristine.addValidator(hashtagInputElement, validateHashtagsCount, ErrorMessages.INVALID_HASHTAG_COUNT, 1, true);
+pristine.addValidator(hashtagInputElement, validateHashtagLength, ErrorMessages.INVALID_HASHTAG_LENGTH, 4, true);
+pristine.addValidator(hashtagInputElement, validateHashtagSpace, ErrorMessages.INVALID_HASHTAG_SPACE, 5, true);
+pristine.addValidator(hashtagInputElement, validateHashtagUnique, ErrorMessages.INVALID_HASHTAG_UNIQUE, 2, true);
+pristine.addValidator(hashtagInputElement, validateHashtagStart, ErrorMessages.INVALID_HASHTAG_START_WITH, 7, true);
+pristine.addValidator(hashtagInputElement, validateHashtagPrefix, ErrorMessages.INVALID_HASHTAG_PREFIX, 6, true);
+pristine.addValidator(hashtagInputElement, validateHashtagPattern, ErrorMessages.INVALID_HASHTAG_PATTERN, 3, true);
 
-pristine.addValidator(descriptionInputElement, validateDescriptionLength, errorMessages.INVALID_DESC_LENGTH);
+pristine.addValidator(descriptionInputElement, validateDescriptionLength, ErrorMessages.INVALID_DESC_LENGTH);
 
-export { pristine };
+const validateForm = () => pristine.validate();
+const resetValidateForm = () => pristine.reset();
+
+export { validateForm, resetValidateForm };
