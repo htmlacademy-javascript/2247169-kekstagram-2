@@ -1,44 +1,47 @@
-const SCALE_STEP = 25;
-const SCALE_MIN = 25;
-const SCALE_MAX = 100;
-const SCALE_DEFAULT = 100;
+import { imageElement } from './utils';
 
-const smallerControlButton = document.querySelector('.scale__control--smaller');
-const biggerControlButton = document.querySelector('.scale__control--bigger');
+const Scale = {
+  STEP: 25,
+  MIN: 25,
+  MAX: 100,
+  DEFAULT: 100,
+};
+
+const decreaseButtonElement = document.querySelector('.scale__control--smaller');
+const increaseButtonElement = document.querySelector('.scale__control--bigger');
 const scaleControlElement = document.querySelector('.scale__control--value');
-const imageElement = document.querySelector('.img-upload__preview img');
 
-const onIncreaseScale = () => {
-  let scaleValue = parseInt(scaleControlElement.value, 10);
-  if (scaleValue > SCALE_MIN) {
-    scaleValue -= SCALE_STEP;
+const setScale = (value) => {
+  scaleControlElement.value = `${value}%`;
+  imageElement.style.transform = `scale(${value / 100})`;
+};
+
+const onDecreaseButtonClick = () => {
+  const scaleValue = parseInt(scaleControlElement.value, 10) - Scale.STEP;
+  if (scaleValue >= Scale.MIN) {
+    setScale(scaleValue);
   }
-  scaleControlElement.value = `${scaleValue}%`;
-  imageElement.style.transform = `scale(${ scaleValue / 100})`;
 };
 
-const onDecreaseScale = () => {
-  let scaleValue = parseInt(scaleControlElement.value, 10);
-  if (scaleValue < SCALE_MAX) {
-    scaleValue += SCALE_STEP;
+const onIncreaseButtonClick = () => {
+  const scaleValue = parseInt(scaleControlElement.value, 10) + Scale.STEP;
+  if (scaleValue <= Scale.MAX) {
+    setScale(scaleValue);
   }
-  scaleControlElement.value = `${scaleValue}%`;
-  imageElement.style.transform = `scale(${ scaleValue / 100})`;
 };
 
-const addScaleHandler = () => {
-  smallerControlButton.addEventListener('click', onIncreaseScale);
-  biggerControlButton.addEventListener('click', onDecreaseScale);
+const addScaleListener = () => {
+  decreaseButtonElement.addEventListener('click', onDecreaseButtonClick);
+  increaseButtonElement.addEventListener('click', onIncreaseButtonClick);
 };
 
-const removeScaleHandler = () => {
-  smallerControlButton.removeEventListener('click', onIncreaseScale);
-  biggerControlButton.removeEventListener('click', onDecreaseScale);
+const removeScaleListener = () => {
+  decreaseButtonElement.removeEventListener('click', onDecreaseButtonClick);
+  increaseButtonElement.removeEventListener('click', onIncreaseButtonClick);
 };
 
 const resetScale = () => {
-  imageElement.style.transform = '';
-  imageElement.value = `${SCALE_DEFAULT}%`;
+  setScale(Scale.DEFAULT);
 };
 
-export { addScaleHandler, removeScaleHandler, resetScale };
+export { addScaleListener, removeScaleListener, resetScale };

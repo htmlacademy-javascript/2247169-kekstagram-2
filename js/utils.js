@@ -1,3 +1,5 @@
+const imageElement = document.querySelector('.img-upload__preview img');
+
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -24,4 +26,4 @@ const createRandomId = (min, max) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomInteger, createRandomId, getRandomArrayElement, isEscapeKey };
+export { getRandomInteger, createRandomId, getRandomArrayElement, isEscapeKey, imageElement };

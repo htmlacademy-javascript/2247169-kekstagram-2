@@ -1,6 +1,13 @@
-const EFFECTS = {
+import { imageElement } from './utils';
+
+const effectsConfig = {
   none: {
-    filter: 'none'
+    filter: 'none',
+    min: 0,
+    max: 0,
+    start: 0,
+    step: 0,
+    unit: '',
   },
 
   chrome: {
@@ -49,12 +56,12 @@ const EFFECTS = {
   }
 };
 
-const imageElement = document.querySelector('.img-upload__preview img');
 const effectContainerElement = document.querySelector('.img-upload__effect-level');
 const effectlValueElement = document.querySelector('.effect-level__value');
 const effectSliderElement = document.querySelector('.effect-level__slider');
 const effectsListElement = document.querySelector('.effects__list');
-const effectsRadioElement = document.querySelectorAll('.effects__radio');
+
+let currentEffect = 'none';
 
 effectContainerElement.classList.add('hidden');
 
@@ -79,40 +86,44 @@ noUiSlider.create(effectSliderElement, {
   },
 });
 
-effectSliderElement.noUiSlider.on('update', () => {
-  effectlValueElement.value = effectSliderElement.noUiSlider.get();
-});
+const updateSliderOptions = (effect) => {
+  effectSliderElement.noUiSlider.updateOptions({
+    range: {
+      min: effect.min,
+      max: effect.max
+    },
+    start: effect.start,
+    step: effect.step,
+  });
+};
+
+const applyEffect = (effect, currentValue) => {
+  effectlValueElement.value = currentValue;
+  imageElement.style.filter = `${effect.filter}(${effectlValueElement.value}${effect.unit})`;
+};
 
 const resetEffect = () => {
   effectContainerElement.classList.add('hidden');
   imageElement.style.filter = 'none';
 };
 
-const onEffectsChange = () => {
-  effectsRadioElement.forEach((effectRadio) => {
-    const effectValue = effectRadio.value;
-    const effectName = EFFECTS[effectValue];
-
-    if (effectRadio.checked) {
-      if (effectValue !== 'none') {
-        effectContainerElement.classList.remove('hidden');
-        effectSliderElement.noUiSlider.updateOptions({
-          range: {
-            min: effectName.min,
-            max: effectName.max,
-          },
-          start: effectName.start,
-          step: effectName.step,
-        });
-        effectSliderElement.noUiSlider.on('update', () => {
-          imageElement.style.filter = `${effectName.filter}(${effectlValueElement.value}${effectName.unit})`;
-        });
-      } else {
-        resetEffect();
-      }
+const onEffectsChange = (evt) => {
+  if (evt.target.matches('.effects__radio')) {
+    const effectValue = evt.target.value;
+    if (effectValue !== 'none') {
+      effectContainerElement.classList.remove('hidden');
+      currentEffect = effectsConfig[effectValue];
+      updateSliderOptions(currentEffect);
+    } else {
+      resetEffect();
     }
-  });
+  }
 };
+
+effectSliderElement.noUiSlider.on('update', () => {
+  effectlValueElement.value = effectSliderElement.noUiSlider.get();
+  applyEffect(currentEffect, effectlValueElement.value);
+});
 
 effectsListElement.addEventListener('change', onEffectsChange);
 
