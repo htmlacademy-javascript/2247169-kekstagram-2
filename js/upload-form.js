@@ -1,5 +1,7 @@
 import { isEscapeKey } from './utils.js';
-import { pristine } from './upload-form-validation.js';
+import { validateForm, resetValidateForm } from './upload-form-validation.js';
+import { addScaleListener, removeScaleListener, resetScale } from './upload-form-scaler.js';
+import { resetEffect } from './upload-form-effects.js';
 
 const uploadFormElement = document.querySelector('.img-upload__form');
 const uploadFileElement = uploadFormElement.querySelector('.img-upload__input');
@@ -11,6 +13,7 @@ const openUploadModal = () => {
   document.body.classList.add('modal-open');
   closeButtonElement.addEventListener('click', onCloseButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
+  addScaleListener();
 };
 
 const closeUploadModal = () => {
@@ -19,7 +22,10 @@ const closeUploadModal = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   closeButtonElement.removeEventListener('click', onCloseButtonClick);
   uploadFormElement.reset();
-  pristine.reset();
+  resetValidateForm();
+  removeScaleListener();
+  resetScale();
+  resetEffect();
 };
 
 function onCloseButtonClick () {
@@ -35,15 +41,11 @@ function onDocumentKeydown (evt) {
 
 const onSubmitUploadForm = (evt) => {
   evt.preventDefault();
-  if (pristine.validate()) {
+  const isValid = validateForm();
+  if (isValid) {
     uploadFormElement.submit();
   }
 };
 
-const showUploadModal = () => {
-  uploadFileElement.addEventListener('change', openUploadModal);
-};
-
+uploadFileElement.addEventListener('change', openUploadModal);
 uploadFormElement.addEventListener('submit', onSubmitUploadForm);
-
-export { showUploadModal };
