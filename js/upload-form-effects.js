@@ -1,4 +1,4 @@
-import { imageElement } from './utils';
+import { imageElement } from './utils.js';
 
 const effectsConfig = {
   none: {
