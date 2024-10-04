@@ -1,6 +1,6 @@
 import { isEscapeKey } from './utils.js';
 import { validateForm, resetValidateForm } from './upload-form-validation.js';
-import { addScaleHandler, removeScaleHandler, resetScale } from './upload-form-scaler.js';
+import { addScaleListener, removeScaleListener, resetScale } from './upload-form-scaler.js';
 import { resetEffect } from './upload-form-effects.js';
 
 const uploadFormElement = document.querySelector('.img-upload__form');
@@ -13,7 +13,7 @@ const openUploadModal = () => {
   document.body.classList.add('modal-open');
   closeButtonElement.addEventListener('click', onCloseButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
-  addScaleHandler();
+  addScaleListener();
 };
 
 const closeUploadModal = () => {
@@ -23,7 +23,7 @@ const closeUploadModal = () => {
   closeButtonElement.removeEventListener('click', onCloseButtonClick);
   uploadFormElement.reset();
   resetValidateForm();
-  removeScaleHandler();
+  removeScaleListener();
   resetScale();
   resetEffect();
 };
