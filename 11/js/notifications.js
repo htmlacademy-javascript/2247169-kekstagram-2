@@ -2,8 +2,15 @@ import { isEscapeKey } from './utils.js';
 
 const MESSAGE_TIMEOUT = 5000;
 
-const errorTemplate = document.querySelector('#data-error').content;
 const bodyElement = document.body;
+const errorTemplate = document.querySelector('#data-error').content;
+const successUploadTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorUploadTemplate = document.querySelector('#error').content.querySelector('.error');
+
+const notificationTypeToTemplate = {
+  success: successUploadTemplate,
+  error: errorUploadTemplate,
+};
 
 const showErrorMessage = () => {
   const errorPlaceElement = errorTemplate.cloneNode(true);
@@ -18,24 +25,36 @@ const showErrorMessage = () => {
 
 };
 
-const closeNotification = (evt) => {
-  evt.stopPropagation();
-  const templateElement = document.querySelector('.success') || document.querySelector('.error');
-  const closeSuccessButtonElement = templateElement.querySelector('.success__button');
-  const closeErrorButtonElement = templateElement.querySelector('.error__button');
+const closeNotification = () => {
+  const templateElement = document.querySelector('.notification');
 
-  if (evt.target === templateElement || evt.target === closeSuccessButtonElement || evt.target === closeErrorButtonElement || isEscapeKey(evt)) {
-    templateElement.remove();
-    bodyElement.removeEventListener('click', closeNotification);
-    bodyElement.removeEventListener('keydown', closeNotification);
-  }
+  templateElement.remove();
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const showNotification = (template) => {
-  const notificationElement = template.cloneNode(true);
+const showNotification = (type) => {
+  const notificationElement = notificationTypeToTemplate[type].cloneNode(true);
+  const buttonElement = notificationElement.querySelector(`.${type}__button`);
+
+  buttonElement.addEventListener('click', () => {
+    closeNotification();
+  });
+
+  notificationElement.addEventListener('click', (evt) => {
+    if (evt.target === notificationElement) {
+      closeNotification();
+    }
+  });
+
   bodyElement.append(notificationElement);
-  bodyElement.addEventListener('click', closeNotification);
-  bodyElement.addEventListener('keydown', closeNotification);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
+
+function onDocumentKeydown (evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeNotification();
+  }
+}
 
 export { showErrorMessage, closeNotification, showNotification };

@@ -10,8 +10,6 @@ const uploadFileElement = uploadFormElement.querySelector('.img-upload__input');
 const modalElement = uploadFormElement.querySelector('.img-upload__overlay');
 const closeButtonElement = modalElement.querySelector('.img-upload__cancel');
 const submitButtonElement = modalElement.querySelector('.img-upload__submit');
-const succesUploadTemplate = document.querySelector('#success').content;
-const errorUploadTemplate = document.querySelector('#error').content;
 
 const SubmitButtonText = {
   IDLE: 'Сохранить',
@@ -43,7 +41,7 @@ function onCloseButtonClick () {
 }
 
 function onDocumentKeydown (evt) {
-  if (isEscapeKey(evt) && !evt.target.classList.contains('text__hashtags') && !evt.target.classList.contains('text__description')) {
+  if (isEscapeKey(evt) && !evt.target.classList.contains('text__hashtags') && !evt.target.classList.contains('text__description') && !document.querySelector('.error')) {
     evt.preventDefault();
     closeUploadModal();
   }
@@ -67,10 +65,10 @@ const onSubmitUploadForm = (evt) => {
     sendData(new FormData(evt.target))
       .then(() => {
         closeUploadModal();
-        showNotification(succesUploadTemplate);
+        showNotification('success');
       })
       .catch(() => {
-        showNotification(errorUploadTemplate);
+        showNotification('error');
       })
       .finally(() => {
         enableSubmitButton(SubmitButtonText.IDLE);
