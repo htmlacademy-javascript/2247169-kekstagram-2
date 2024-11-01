@@ -14,7 +14,7 @@ const createThumbnail = (photo) => {
   return thumbnailElement;
 };
 
-export const renderThumbnails = (photos, containerElement) => {
+const renderThumbnails = (photos, containerElement) => {
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
@@ -24,3 +24,5 @@ export const renderThumbnails = (photos, containerElement) => {
 
   containerElement.appendChild(fragment);
 };
+
+export { renderThumbnails };
