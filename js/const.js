@@ -19,4 +19,6 @@ const Filter = {
 const MAX_PHOTOS_COUNT = 10;
 const DEBOUNCE_DELAY = 500;
 
-export { Route, Method, Filter, BASE_URL, MAX_PHOTOS_COUNT, DEBOUNCE_DELAY };
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
+export { Route, Method, Filter, BASE_URL, MAX_PHOTOS_COUNT, DEBOUNCE_DELAY, FILE_TYPES };
