@@ -1,4 +1,7 @@
+import { DEBOUNCE_DELAY } from './const.js';
+
 const imageElement = document.querySelector('.img-upload__preview img');
+const picturesContainerElement = document.querySelector('.pictures');
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -26,4 +29,13 @@ const createRandomId = (min, max) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomInteger, createRandomId, getRandomArrayElement, isEscapeKey, imageElement };
+const debounce = (callback, timeoutDelay = DEBOUNCE_DELAY) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export { getRandomInteger, createRandomId, getRandomArrayElement, isEscapeKey, imageElement, picturesContainerElement, debounce };
