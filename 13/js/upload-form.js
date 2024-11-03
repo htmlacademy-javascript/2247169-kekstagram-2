@@ -12,6 +12,7 @@ const modalElement = uploadFormElement.querySelector('.img-upload__overlay');
 const closeButtonElement = modalElement.querySelector('.img-upload__cancel');
 const submitButtonElement = modalElement.querySelector('.img-upload__submit');
 const imageUploadElement = document.querySelector('.img-upload__preview').querySelector('img');
+const imagePreviewEffects = document.querySelectorAll('.effects__preview');
 
 const SubmitButtonText = {
   IDLE: 'Сохранить',
@@ -25,6 +26,9 @@ const uploadImage = () => {
 
   if (matches) {
     imageUploadElement.src = URL.createObjectURL(file);
+    imagePreviewEffects.forEach((item) => {
+      item.style.backgroundImage = `url(${imageUploadElement.src})`;
+    });
   }
 };
 
