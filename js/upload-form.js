@@ -4,16 +4,32 @@ import { addScaleListener, removeScaleListener, resetScale } from './upload-form
 import { resetEffect } from './upload-form-effects.js';
 import { sendData } from './api.js';
 import { showNotification } from './notifications.js';
+import { FILE_TYPES } from './const.js';
 
 const uploadFormElement = document.querySelector('.img-upload__form');
 const uploadFileElement = uploadFormElement.querySelector('.img-upload__input');
 const modalElement = uploadFormElement.querySelector('.img-upload__overlay');
 const closeButtonElement = modalElement.querySelector('.img-upload__cancel');
 const submitButtonElement = modalElement.querySelector('.img-upload__submit');
+const imageUploadElement = document.querySelector('.img-upload__preview').querySelector('img');
+const imagePreviewEffects = document.querySelectorAll('.effects__preview');
 
 const SubmitButtonText = {
   IDLE: 'Сохранить',
   SENDING: 'Сохраняю. Пожалуйста, подождите.'
+};
+
+const uploadImage = () => {
+  const file = uploadFileElement.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((item) => fileName.endsWith(item));
+
+  if (matches) {
+    imageUploadElement.src = URL.createObjectURL(file);
+    imagePreviewEffects.forEach((item) => {
+      item.style.backgroundImage = `url(${imageUploadElement.src})`;
+    });
+  }
 };
 
 const openUploadModal = () => {
@@ -22,6 +38,7 @@ const openUploadModal = () => {
   closeButtonElement.addEventListener('click', onCloseButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
   addScaleListener();
+  uploadImage();
 };
 
 const closeUploadModal = () => {
