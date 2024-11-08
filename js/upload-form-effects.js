@@ -57,7 +57,7 @@ const effectsConfig = {
 };
 
 const effectContainerElement = document.querySelector('.img-upload__effect-level');
-const effectlValueElement = document.querySelector('.effect-level__value');
+const effectsValueElement = document.querySelector('.effect-level__value');
 const effectSliderElement = document.querySelector('.effect-level__slider');
 const effectsListElement = document.querySelector('.effects__list');
 
@@ -98,8 +98,8 @@ const updateSliderOptions = (effect) => {
 };
 
 const applyEffect = (effect, currentValue) => {
-  effectlValueElement.value = currentValue;
-  imageElement.style.filter = `${effect.filter}(${effectlValueElement.value}${effect.unit})`;
+  effectsValueElement.value = currentValue;
+  imageElement.style.filter = `${effect.filter}(${effectsValueElement.value}${effect.unit})`;
 };
 
 const resetEffect = () => {
@@ -121,8 +121,8 @@ const onEffectsChange = (evt) => {
 };
 
 effectSliderElement.noUiSlider.on('update', () => {
-  effectlValueElement.value = effectSliderElement.noUiSlider.get();
-  applyEffect(currentEffect, effectlValueElement.value);
+  effectsValueElement.value = effectSliderElement.noUiSlider.get();
+  applyEffect(currentEffect, effectsValueElement.value);
 });
 
 effectsListElement.addEventListener('change', onEffectsChange);
