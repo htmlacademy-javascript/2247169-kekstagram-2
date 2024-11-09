@@ -67,11 +67,11 @@ effectContainerElement.classList.add('hidden');
 
 noUiSlider.create(effectSliderElement, {
   range: {
-    min: 0,
-    max: 1,
+    min: effectsConfig.none.min,
+    max: effectsConfig.none.max,
   },
-  start: 1,
-  step: 0.1,
+  start: effectsConfig.none.start,
+  step: effectsConfig.none.step,
   connect: 'lower',
   format: {
     to: function (value) {
